@@ -8,7 +8,7 @@ app = Flask(__name__)
 
 app.config['SQLALCHEMY_DATABASE_URI'] ='sqlite:///users.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.config['SECRET_KEY'] = 'Scom_EWOJS21R4O'
+app.config['SECRET_KEY'] = ''#建议使用随机字符串
 db = SQLAlchemy(app)
 
 serializer = URLSafeTimedSerializer(app.config['SECRET_KEY'])
@@ -121,7 +121,7 @@ def get_user_info(user_id):
 @app.route('/verify_email/<token>', methods=['GET'])
 def verify_email(token):
     try:
-        data = serializer.deserialize(token, max_age=3600)  # 设置令牌有效期为1小时
+        data = serializer.deserialize(token, max_age=3600)  # 设置token有效期为1小时
         user_id = data['user_id']
         email = data['email']
 
